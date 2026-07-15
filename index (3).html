@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="description" content="JODO AKA TO SHIRO - Dojo Karate profesional. Discipline, Respect, Spirit. Dipimpin Senpai Andi Taufik.">
+  <meta name="theme-color" content="#090909">
+  <meta property="og:title" content="JODO AKA TO SHIRO | Dojo Karate">
+  <meta property="og:image" content="https://i.ibb.co.com/DHK9KGyV/1000050714-removebg-preview.png">
+  <link rel="icon" href="https://i.ibb.co.com/DHK9KGyV/1000050714-removebg-preview.png">
+  <title>JODO AKA TO SHIRO | Discipline • Respect • Spirit</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --red:#FF0000; --white:#FFFFFF; --black:#090909; --dark:#1A1A1A;
+      --glass: rgba(9,9,9,0.7); --neon: 0 0 18px rgba(255,0,0,0.8);
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--black); color: var(--white);
+      line-height: 1.6; overflow-x: hidden;
+      opacity: 0; transition: opacity 0.5s ease;
+    }
+    body.loaded { opacity: 1; }
+    #loading {
+      position:fixed; inset:0; background:var(--black);
+      display:flex; align-items:center; justify-content:center;
+      z-index:10000; transition:0.5s;
+    }
+    #loading.hidden { opacity:0; visibility:hidden; }
+    .loader-logo { width:90px; animation: floatLogo 2s infinite alternate; }
+    @keyframes floatLogo {
+      0%{ transform:translateY(0); filter:drop-shadow(0 0 8px red); }
+      100%{ transform:translateY(-12px); filter:drop-shadow(0 0 22px white); }
+    }
+    #progress-bar {
+      position:fixed; top:0; left:0; height:3px;
+      background:linear-gradient(90deg, red, white, red);
+      z-index:9999; width:0%; box-shadow:0 0 15px red;
+    }
+    .navbar {
+      position:fixed; top:0; width:100%; z-index:1000;
+      padding:1rem 2rem; display:flex; align-items:center;
+      justify-content:space-between; transition:0.4s;
+      background:transparent;
+    }
+    .navbar.scrolled {
+      background: rgba(9,9,9,0.8); backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,0,0,0.5);
+      box-shadow:0 4px 25px rgba(255,0,0,0.25);
+    }
+    .logo-nav { height:44px; }
+    .nav-links {
+      display:flex; gap:1.8rem; list-style:none; align-items:center;
+    }
+    .nav-links a {
+      color:white; text-decoration:none; font-weight:500;
+      position:relative; transition:0.3s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-5px; left:0;
+      width:0; height:2px; background:red;
+      box-shadow:0 0 10px red; transition:0.3s;
+    }
+    .nav-links a:hover { color:#ff6666; text-shadow:0 0 8px red; }
+    .nav-links a:hover::after { width:100%; }
+    .btn-red {
+      background:red; color:white; padding:0.6rem 1.6rem;
+      border-radius:40px; font-weight:bold; text-decoration:none;
+      box-shadow:0 0 20px rgba(255,0,0,0.7); transition:0.3s;
+      border:none; cursor:pointer; white-space:nowrap;
+    }
+    .btn-red:hover { background:#cc0000; box-shadow:0 0 35px red; transform:translateY(-2px); }
+    .menu-toggle { display:none; background:none; border:none; color:white; font-size:2rem; cursor:pointer; }
+    section {
+      min-height:100vh; padding:6rem 2rem 4rem;
+      display:flex; flex-direction:column; justify-content:center;
+      position:relative; z-index:2; scroll-margin-top:80px;
+    }
+    .hero-section {
+      height:100vh; display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .slideshow {
+      position:absolute; inset:0; background-size:cover;
+      background-position:center; transition:opacity 1.2s; opacity:0;
+    }
+    .slideshow.active { opacity:1; }
+    .hero-overlay {
+      position:absolute; inset:0; background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(5px); z-index:1;
+    }
+    .hero-content { position:relative; z-index:2; text-align:center; }
+    .hero-logo { width:150px; filter:drop-shadow(0 0 30px red); margin-bottom:1rem; }
+    .glass-card {
+      background:rgba(26,26,26,0.6); backdrop-filter:blur(16px);
+      border:1px solid rgba(255,0,0,0.3); border-radius:24px;
+      padding:2rem; box-shadow:0 20px 40px rgba(0,0,0,0.7);
+      transition:0.4s;
+    }
+    .glass-card:hover { border-color:rgba(255,0,0,0.7); box-shadow:0 0 35px rgba(255,0,0,0.5); }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:center; }
+    .masonry { columns:3 240px; gap:1.5rem; }
+    .masonry img { width:100%; margin-bottom:1.5rem; border-radius:20px; transition:0.3s; cursor:pointer; }
+    .masonry img:hover { transform:scale(1.03); box-shadow:0 0 28px red; }
+    .badge { background:red; padding:0.2rem 1rem; border-radius:20px; font-size:0.8rem; display:inline-block; margin-bottom:0.5rem; }
+    footer { background:#050505; text-align:center; padding:3rem; border-top:1px solid red; }
+    .floating-wa {
+      position:fixed; bottom:25px; right:25px; background:#25D366;
+      width:60px; height:60px; border-radius:50%; display:flex;
+      align-items:center; justify-content:center; color:white;
+      font-size:2rem; box-shadow:0 0 25px green; z-index:999; text-decoration:none;
+    }
+    .toast {
+      position:fixed; bottom:30px; left:50%; transform:translateX(-50%);
+      background:red; color:white; padding:0.8rem 2rem;
+      border-radius:30px; z-index:9999; display:none;
+    }
+    @media (max-width:768px) {
+      .grid-2 { grid-template-columns:1fr; }
+      .nav-links { display:none; flex-direction:column; position:absolute; top:70px; left:0; width:100%; background:black; padding:1.5rem; }
+      .nav-links.active { display:flex; }
+      .menu-toggle { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading"><img src="https://i.ibb.co.com/DHK9KGyV/1000050714-removebg-preview.png" class="loader-logo" alt="logo"></div>
+  <div id="progress-bar"></div>
+  <div id="particles" style="position:fixed; inset:0; pointer-events:none; z-index:0;"></div>
+
+  <nav class="navbar" id="navbar">
+    <img src="https://i.ibb.co.com/DHK9KGyV/1000050714-removebg-preview.png" alt="JODO" class="logo-nav">
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#visi">Visi & Misi</a></li>
+      <li><a href="#program">Program</a></li>
+      <li><a href="#galeri-latihan">Galeri Latihan</a></li>
+      <li><a href="#galeri-kejuaraan">Galeri Kejuaraan</a></li>
+      <li><a href="#prestasi">Prestasi</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+      <li><a href="#daftar" class="btn-red">Daftar Sekarang</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home" class="hero-section">
+    <div class="slideshow active" style="background-image:url('https://i.ibb.co.com/ccp1r0R0/IMG-20260715-WA0020.jpg');"></div>
+    <div class="slideshow" style="background-image:url('https://i.ibb.co.com/NnGTB0ys/IMG-20260715-WA0019.jpg');"></div>
+    <div class="slideshow" style="background-image:url('https://i.ibb.co.com/rRN49rxg/IMG-20260715-WA0018.jpg');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="https://i.ibb.co.com/DHK9KGyV/1000050714-removebg-preview.png" class="hero-logo">
+      <h1 style="font-size:3.8rem; background:linear-gradient(to right,red,white,red); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">JODO AKA TO SHIRO</h1>
+      <p style="font-size:1.5rem; letter-spacing:6px;">Discipline • Respect • Spirit</p>
+      <p style="max-width:600px; margin:1rem auto;">Membangun karakter, disiplin, mental juara, serta semangat Bushido melalui latihan karate yang profesional dan berkualitas.</p>
+      <div style="margin-top:2rem;">
+        <a href="#daftar" class="btn-red">Daftar Sekarang</a>
+        <a href="#tentang" class="btn-outline" style="border:1px solid white; padding:0.7rem 2rem; border-radius:40px; color:white; margin-left:10px;">Tentang Kami</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TENTANG -->
+  <section id="tentang">
+    <div class="grid-2">
+      <img src="https://i.ibb.co.com/Kcz1Mmqs/IMG-20260715-WA0021.jpg" alt="Senpai" style="border-radius:30px; box-shadow:0 0 40px red;">
+      <div>
+        <h2 style="color:red; font-size:2.2rem;">Tentang Kami</h2>
+        <p style="font-size:1.1rem;">JODO AKA TO SHIRO merupakan dojo karate yang berkomitmen membentuk karateka yang disiplin, tangguh, berprestasi, serta memiliki karakter luhur sesuai filosofi Bushido.</p>
+        <div class="glass-card" style="margin-top:2rem;">
+          <h3>ANDI TAUFIK</h3>
+          <p style="color:red;">Senpai</p>
+          <p><em>"Karate bukan hanya tentang bertarung, tetapi tentang membangun karakter."</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISI MISI -->
+  <section id="visi">
+    <div class="grid-2">
+      <div class="glass-card"><h2>VISI</h2><p>Mengharumkan negeri melalui karate. AKA TO SHIRO sejati yang memiliki integritas tinggi, tangguh, rendah hati, berprestasi, menuju Karate Berkelas Dunia. <strong>AKA TO SHIRO Goes To World Class.</strong></p></div>
+      <div class="glass-card"><h2 style="color:red;">MISI</h2><ol><li>Menanamkan disiplin, hormat, tanggung jawab.</li><li>Pengembangan teknis dan mental.</li><li>Sportivitas dan persaudaraan.</li><li>Filosofi Aka (keberanian) dan Shiro (kesucian).</li><li>Atlet berprestasi lokal-internasional.</li><li>Pembinaan semua usia.</li></ol></div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section id="program">
+    <h2 style="text-align:center;">Program Latihan</h2>
+    <div class="grid-2" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin-top:2rem;">
+      <div class="glass-card">🥋 Karate Dasar</div>
+      <div class="glass-card">🥋 Kata</div>
+      <div class="glass-card">🥋 Kumite</div>
+      <div class="glass-card">🥋 Persiapan Kejuaraan</div>
+      <div class="glass-card">🥋 Ujian Kenaikan Sabuk</div>
+    </div>
+  </section>
+
+  <!-- DAFTAR -->
+  <section id="daftar" style="min-height:auto; text-align:center;">
+    <div class="glass-card" style="max-width:500px; margin:auto;">
+      <h2>Biaya Pendaftaran</h2>
+      <p style="font-size:2.5rem; color:red;">Rp50.000,-</p>
+      <p>BRI: 0040-01-01-1026-53-4 a.n ANDI TAUFIK</p>
+      <button id="copyRek" class="btn-red" style="margin:1rem;">Salin Nomor Rekening</button>
+      <a href="https://wa.me/6281373372227" target="_blank" class="btn-red">Daftar via WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- GALERI KEJUARAAN (foto kejuaraan) -->
+  <section id="galeri-latihan">
+    <h2>Galeri Kejuaraan</h2>
+    <div class="masonry">
+      <div><span class="badge">🏆 Prestasi</span><img src="https://i.ibb.co.com/ccp1r0R0/IMG-20260715-WA0020.jpg" alt="latihan">
+      <div><span class="badge">🏆 Prestasi</span><img src="https://i.ibb.co.com/rRN49rxg/IMG-20260715-WA0018.jpg" alt="latihan">
+      <div><span class="badge">🏆 Prestasi</span><img src="https://i.ibb.co.com/f3tsSHL/IMG-20260715-WA0009.jpg" alt="latihan">
+      <div><span class="badge">🏆 Prestasi</span><img src="https://i.ibb.co.com/Q39kbjRB/IMG-20260715-WA0011.jpg" alt="latihan">
+      <div><span class="badge">🏆 Prestasi</span><img src="https://i.ibb.co.com/j9kp2pDj/IMG-20260715-WA0013.jpg" alt="latihan">
+    </div>
+  </section>
+
+  <!-- GALERI LATIHAN (foto latihan) -->
+  <section id="galeri-kejuaraan">
+    <h2>Galeri Latihan</h2>
+    <div class="grid-2" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+      <img src="https://i.ibb.co.com/NnGTB0ys/IMG-20260715-WA0019.jpg" style="width:100%; border-radius:20px;"></div>
+      <img src="https://i.ibb.co.com/ymwyQShX/IMG-20260715-WA0017.jpg" style="width:100%; border-radius:20px;"></div>
+      <img src="https://i.ibb.co.com/BVzmNtjH/IMG-20260715-WA0016.jpg" style="width:100%; border-radius:20px;"></div>
+      <img src="https://i.ibb.co.com/zh7wCVq1/IMG-20260715-WA0015.jpg" style="width:100%; border-radius:20px;"></div>
+      <img src="https://i.ibb.co.com/mVWG1h2C/IMG-20260715-WA0014.jpg" style="width:100%; border-radius:20px;"></div>
+    </div>
+  </section>
+
+  <!-- PRESTASI -->
+  <section id="prestasi">
+    <h2>Prestasi</h2>
+    <div class="grid-2" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+      <div class="glass-card">🏆 Piala Erick Thohir</div>
+      <div class="glass-card">🏆 DAN DENPOM III Lampung</div>
+      <div class="glass-card">🏆 Spiritile Lampung</div>
+      <div class="glass-card">🏆 FORKI Kota Bandar Lampung</div>
+      <div class="glass-card">🏆 SHO-KAIDO se-Provinsi</div>
+      <div class="glass-card">🏆 Dharma Piala Champion</div>
+      <div class="glass-card">🏆 FORKI Provinsi Lampung</div>
+      <div class="glass-card">🏆 UNJ Tingkat Nasional</div>
+      <div class="glass-card">🏆 Piala Gubernur Lampung</div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>FAQ</h2>
+    <details class="glass-card" style="margin:1rem 0;"><summary>Apakah menerima pemula?</summary><p>Tentu, semua level diterima.</p></details>
+    <details class="glass-card" style="margin:1rem 0;"><summary>Batasan usia?</summary><p>Anak-anak hingga dewasa.</p></details>
+    <details class="glass-card" style="margin:1rem 0;"><summary>Biaya pendaftaran?</summary><p>Rp50.000,-</p></details>
+    <details class="glass-card" style="margin:1rem 0;"><summary>Cara mendaftar?</summary><p>Via WhatsApp atau datang langsung.</p></details>
+    <details class="glass-card" style="margin:1rem 0;"><summary>Ikut kejuaraan?</summary><p>Ya, kami siapkan atlet.</p></details>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak" style="min-height:auto;">
+    <div class="glass-card" style="max-width:600px; margin:auto; text-align:center;">
+      <p>📱 +62 813-7337-2227 <a href="https://wa.me/6281373372227" class="btn-red">Hubungi WhatsApp</a></p>
+      <p>🎥 <a href="https://youtube.com/@anditaufik1058" target="_blank">YouTube Channel</a></p>
+      <p>📍 <a href="https://maps.app.goo.gl/5iCdr3aCGfGNTwWE7" target="_blank">Lihat Lokasi Dojo</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <img src="https://i.ibb.co.com/DHK9KGyV/1000050714-removebg-preview.png" width="80">
+    <h3>JODO AKA TO SHIRO</h3>
+    <p>Discipline • Respect • Spirit</p>
+    <p>© 2026 JODO AKA TO SHIRO. All Rights Reserved. ❤️</p>
+  </footer>
+
+  <a href="https://wa.me/6281373372227" class="floating-wa" target="_blank">💬</a>
+  <div id="toast" class="toast">✔ Nomor rekening berhasil disalin.</div>
+
+  <script>
+    (function() {
+      window.addEventListener('load', ()=>{
+        document.body.classList.add('loaded');
+        document.getElementById('loading').classList.add('hidden');
+      });
+      // slideshow
+      let slides = document.querySelectorAll('.slideshow');
+      let idx = 0;
+      setInterval(()=>{
+        slides[idx].classList.remove('active');
+        idx = (idx+1) % slides.length;
+        slides[idx].classList.add('active');
+      }, 4000);
+      // navbar
+      window.addEventListener('scroll', ()=>{
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY>50);
+        let h = document.documentElement.scrollHeight - window.innerHeight;
+        document.getElementById('progress-bar').style.width = (window.scrollY/h)*100 +"%";
+      });
+      document.getElementById('menuToggle').addEventListener('click', ()=>{
+        document.getElementById('navLinks').classList.toggle('active');
+      });
+      document.getElementById('copyRek').addEventListener('click', ()=>{
+        navigator.clipboard.writeText('004001011026534');
+        let t = document.getElementById('toast');
+        t.style.display='block';
+        setTimeout(()=> t.style.display='none', 2000);
+      });
+      // particles
+      const canvas = document.createElement('canvas');
+      document.getElementById('particles').appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+      let particles = [];
+      for(let i=0;i<45;i++) particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, col:Math.random()>0.5?'red':'white'});
+      function anim(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle=p.col; ctx.shadowBlur=14; ctx.shadowColor=p.col; ctx.fill();
+          p.y-=0.3; if(p.y<0)p.y=canvas.height;
+        });
+        requestAnimationFrame(anim);
+      }
+      anim();
+      window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+    })();
+  </script>
+</body>
+</html>
